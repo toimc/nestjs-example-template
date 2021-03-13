@@ -1,19 +1,15 @@
 import { Controller, Get } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { AppService } from './app.service';
-import { DatabaseConfig } from './interface';
+import * as config from 'config';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    private configService: ConfigService,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   getHello(): string {
-    const db = this.configService.get<DatabaseConfig>('db');
-    console.log(db);
+    const server = config.get('server');
+    console.log(server);
     return this.appService.getHello();
   }
 }
